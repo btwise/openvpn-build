@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  openvpn-build — OpenVPN packaging
+  OpenVPN -build - OpenVPN封装
 
-  Copyright (C) 2018-2020 Simon Rozman <simon@rozman.si>
+版权所有西蒙·罗兹曼<simon@rozman.si>
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License version 2
-  as published by the Free Software Foundation.
+这个程序是自由软件;您可以重新发布和/或修改它
+它在GNU通用公共许可证第2版的条款下
+由自由软件基金会发布。
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
+发布这个程序是希望它能有所帮助，
+但无任何保证;甚至没有隐含的保证
+适销性或适合于某一特定目的。看到
+详细信息请参见GNU通用公共许可证。
 
-  You should have received a copy of the GNU General Public License along
-  with this program; if not, write to the Free Software Foundation, Inc.,
-  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+您应该同时收到一份GNU通用公共许可证的副本
+有了这个程序;如果没有，请写信给自由软件基金会，
+美国马萨诸塞州波士顿富兰克林街51号5楼02110-1301
 -->
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Fragment>
@@ -65,16 +65,16 @@
         <!--
             Properties
         -->
-        <Property Id="Setup" Value="Setup"/>
+        <Property Id="Setup" Value="安装程序"/>
 
 
         <!--
             Prepare page
         -->
         <UI>
-            <Dialog Id="PreparePage" X="50" Y="50" Width="400" Height="300" Title="[Setup] [SimpleProductName] [DisplayVersion]" Modeless="yes" NoMinimize="yes">
-                <Control Id="Title" Type="Text" X="15" Y="15" Width="320" Height="15" Text="[DlgTitleFont]Preparing [SimpleProductName] installation. Please wait..." TabSkip="no" Transparent="yes" NoPrefix="yes"/>
-                <Control Id="ProgressBar" Type="ProgressBar" X="30" Y="155" Width="340" Height="15" Text="Progress done" TabSkip="no" Disabled="yes" ProgressBlocks="yes">
+            <Dialog Id="PreparePage" X="50" Y="50" Width="400" Height="300" Title="[SimpleProductName] [DisplayVersion] [Setup]" Modeless="yes" NoMinimize="yes">
+                <Control Id="Title" Type="Text" X="15" Y="15" Width="320" Height="15" Text="[DlgTitleFont]Preparing [SimpleProductName] 正在安装. 请稍候..." TabSkip="no" Transparent="yes" NoPrefix="yes"/>
+                <Control Id="ProgressBar" Type="ProgressBar" X="30" Y="155" Width="340" Height="15" Text="进度完成" TabSkip="no" Disabled="yes" ProgressBlocks="yes">
                     <Subscribe Event="SetProgress" Attribute="Progress"/>
                 </Control>
                 <Control Id="ActionText" Type="Text" X="30" Y="175" Width="340" Height="15" TabSkip="no" Transparent="yes" NoPrefix="yes">
@@ -92,17 +92,17 @@
         -->
         <UI>
             <Dialog Id="LicenseAgreementPage" X="50" Y="50" Width="400" Height="300" Title="[Setup] [SimpleProductName] [DisplayVersion]" NoMinimize="yes">
-                <Control Id="Title" Type="Text" X="15" Y="15" Width="320" Height="15" Text="[DlgTitleFont]Please read the following general terms carefully." TabSkip="no" Transparent="yes" NoPrefix="yes"/>
+                <Control Id="Title" Type="Text" X="15" Y="15" Width="320" Height="15" Text="[DlgTitleFont]请仔细阅读以下通用条款." TabSkip="no" Transparent="yes" NoPrefix="yes"/>
                 <Control Id="AgreementText" Type="ScrollableText" X="15" Y="60" Width="370" Height="195" TabSkip="no" Sunken="yes">
                     <Text SourceFile="doc\LicenseAgreement.rtf"/>
                 </Control>
-                <Control Id="IAgree" Type="CheckBox" X="15" Y="265" Width="300" Height="15" Text="I &amp;accept the General Terms." TabSkip="no" Integer="yes" Property="IAgree" CheckBoxValue="1"/>
-                <Control Id="Continue" Type="PushButton" X="325" Y="265" Width="60" Height="20" Text="&amp;Continue" TabSkip="no" Default="yes">
-                    <Condition Action="disable">NOT IAgree</Condition>
-                    <Condition Action="enable">IAgree</Condition>
+                <Control Id="IAgree" Type="CheckBox" X="15" Y="265" Width="300" Height="15" Text="I &amp;接受通用条款." TabSkip="no" Integer="yes" Property="IAgree" CheckBoxValue="1"/>
+                <Control Id="Continue" Type="PushButton" X="325" Y="265" Width="60" Height="20" Text="&amp;继续" TabSkip="no" Default="yes">
+                    <Condition Action="disable">不同意</Condition>
+                    <Condition Action="enable">同意</Condition>
                     <Publish Property="WaitMessage" Value="Determining required space for installation...">1</Publish>
                     <Publish Event="SpawnWaitDialog" Value="WaitDialog">CostingComplete=1</Publish>
-                    <Publish Event="EndDialog" Value="Return">IAgree</Publish>
+                    <Publish Event="EndDialog" Value="Return">同意</Publish>
                 </Control>
                 <Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="400" Height="45" Text="header.bmp" TabSkip="no" Cancel="yes" Disabled="yes">
                     <Publish Event="SpawnDialog" Value="CancelDialog">1</Publish>
@@ -116,10 +116,10 @@
         -->
         <UI>
             <Dialog Id="SetupTypePage" X="50" Y="50" Width="400" Height="300" Title="[Setup] [SimpleProductName] [DisplayVersion]" NoMinimize="yes">
-                <Control Id="Title" Type="Text" X="15" Y="15" Width="320" Height="15" Text="[DlgTitleFont]Choose setup type." TabSkip="no" Transparent="yes" NoPrefix="yes"/>
-                <Control Id="Install" Type="PushButton" X="135" Y="130" Width="130" Height="40" Text="[DlgTitleFont][ButtonTextInstall] " ToolTip="Installs the default features. (Recommended)" TabSkip="no" Default="yes" ElevationShield="yes">
-                    <Publish Property="InstallMode" Value="Typical">1</Publish>
-                    <Publish Property="WaitMessage" Value="Determining required space for installation...">1</Publish>
+                <Control Id="Title" Type="Text" X="15" Y="15" Width="320" Height="15" Text="[DlgTitleFont]选择." TabSkip="no" Transparent="yes" NoPrefix="yes"/>
+                <Control Id="Install" Type="PushButton" X="135" Y="130" Width="130" Height="40" Text="[DlgTitleFont][ButtonTextInstall] " ToolTip="安装默认选项。(推荐)" TabSkip="no" Default="yes" ElevationShield="yes">
+                    <Publish Property="InstallMode" Value="典型">1</Publish>
+                    <Publish Property="WaitMessage" Value="确定所需的安装空间...">1</Publish>
                     <Publish Event="SpawnWaitDialog" Value="WaitDialog">CostingComplete=1</Publish>
                     <Publish Event="EndDialog" Value="Return">OutOfDiskSpace&lt;&gt;1</Publish>
                     <Publish Event="SpawnDialog" Value="OutOfDiskRBPage">OutOfDiskSpace=1 AND OutOfNoRbDiskSpace=0 AND (PROMPTROLLBACKCOST="P" OR NOT PROMPTROLLBACKCOST)</Publish>
@@ -127,7 +127,7 @@
                     <Publish Event="EnableRollback" Value="False">OutOfDiskSpace=1 AND OutOfNoRbDiskSpace=0 AND PROMPTROLLBACKCOST="D"</Publish>
                     <Publish Event="SpawnDialog" Value="OutOfDiskPage">(OutOfDiskSpace=1 AND OutOfNoRbDiskSpace=1) OR (OutOfDiskSpace=1 AND PROMPTROLLBACKCOST="F")</Publish>
                 </Control>
-                <Control Id="Customize" Type="PushButton" X="165" Y="190" Width="70" Height="25" Text="C&amp;ustomize" ToolTip="Allows changing the way features are installed." TabSkip="no">
+                <Control Id="Customize" Type="PushButton" X="165" Y="190" Width="70" Height="25" Text="C&amp;ustomize" ToolTip="允许更改功能的安装方式." TabSkip="no">
                     <Publish Property="InstallMode" Value="Custom">1</Publish>
                     <Publish Property="WaitMessage" Value="Determining required space for installation...">1</Publish>
                     <Publish Event="SpawnWaitDialog" Value="WaitDialog">CostingComplete=1</Publish>
@@ -136,10 +136,10 @@
                 <Control Id="ActiveAdaptersIcon" Type="Icon" X="15" Y="234" Width="24"  Height="24" Hidden="yes" TabSkip="no" Disabled="yes" Text="warning.ico" ToolTip="Exclamation icon">
                     <Condition Action="show"><![CDATA[ACTIVETAPWINDOWS6ADAPTERS OR ACTIVEWINTUNADAPTERS]]></Condition>
                 </Control>
-                <Control Id="ActiveAdaptersLabel" Type="Text" X="44" Y="234" Width="341" Height="15" Hidden="yes" NoPrefix="yes" Transparent="yes" Text="[DlgStrongFont]Active OpenVPN connection(s) detected.">
+                <Control Id="ActiveAdaptersLabel" Type="Text" X="44" Y="234" Width="341" Height="15" Hidden="yes" NoPrefix="yes" Transparent="yes" Text="[DlgStrongFont]检测到活跃的OpenVPN连接.">
                     <Condition Action="show"><![CDATA[ACTIVETAPWINDOWS6ADAPTERS OR ACTIVEWINTUNADAPTERS]]></Condition>
                 </Control>
-                <Control Id="ActiveAdaptersText" Type="Text" X="44" Y="249" Width="341" Height="36" Hidden="yes" NoPrefix="yes" Transparent="yes" Text="This setup will terminate your OpenVPN connection. If you are performing this update remotely, you will get disconnected.">
+                <Control Id="ActiveAdaptersText" Type="Text" X="44" Y="249" Width="341" Height="36" Hidden="yes" NoPrefix="yes" Transparent="yes" Text="此设置将终止您的OpenVPN连接。如果远程执行此更新，则会断开连接。">
                     <Condition Action="show"><![CDATA[ACTIVETAPWINDOWS6ADAPTERS OR ACTIVEWINTUNADAPTERS]]></Condition>
                 </Control>
                 <Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="400" Height="45" Text="header.bmp" TabSkip="no" Cancel="yes" Disabled="yes">
@@ -148,8 +148,8 @@
             </Dialog>
         </UI>
 
-        <Property Id="ButtonTextInstall" Value="&amp;Install Now"/>
-        <Property Id="InstallMode" Value="Typical"/>
+        <Property Id="ButtonTextInstall" Value="&amp;开始安装"/>
+        <Property Id="InstallMode" Value="经典"/>
 
 
         <!--
@@ -157,9 +157,9 @@
         -->
         <UI>
             <Dialog Id="ResumePage" X="50" Y="50" Width="400" Height="300" Title="[Setup] [SimpleProductName] [DisplayVersion]" NoMinimize="yes">
-                <Control Id="Title" Type="Text" X="15" Y="15" Width="320" Height="15" Text="[DlgTitleFont]Click &quot;Next&quot; to resume [SimpleProductName] installation." TabSkip="no" Transparent="yes" NoPrefix="yes"/>
-                <Control Id="Continue" Type="PushButton" X="325" Y="265" Width="60" Height="20" Text="&amp;Continue" TabSkip="no" Default="yes">
-                    <Publish Property="WaitMessage" Value="Determining required space for installation...">1</Publish>
+                <Control Id="Title" Type="Text" X="15" Y="15" Width="320" Height="15" Text="[DlgTitleFont]Click &quot;Next&quot; 恢复 [SimpleProductName] 安装." TabSkip="no" Transparent="yes" NoPrefix="yes"/>
+                <Control Id="Continue" Type="PushButton" X="325" Y="265" Width="60" Height="20" Text="&amp;继续" TabSkip="no" Default="yes">
+                    <Publish Property="WaitMessage" Value="确定所需的安装空间...">1</Publish>
                     <Publish Event="SpawnWaitDialog" Value="WaitDialog">CostingComplete=1</Publish>
                     <Publish Event="EndDialog" Value="Return">OutOfDiskSpace&lt;&gt;1</Publish>
                     <Publish Event="SpawnDialog" Value="OutOfDiskRBPage">OutOfDiskSpace=1 AND OutOfNoRbDiskSpace=0 AND (PROMPTROLLBACKCOST="P" OR NOT PROMPTROLLBACKCOST)</Publish>
@@ -179,19 +179,19 @@
         -->
         <UI>
             <Dialog Id="MaintenanceTypePage" X="50" Y="50" Width="400" Height="300" Title="[Setup] [SimpleProductName] [DisplayVersion]" NoMinimize="yes">
-                <Control Id="Title" Type="Text" X="15" Y="15" Width="320" Height="15" Text="[DlgTitleFont][SimpleProductName] Maintenance" TabSkip="no" Transparent="yes" NoPrefix="yes"/>
-                <Control Id="Text" Type="Text" X="15" Y="60" Width="370" Height="24" Text="Maintenance allows you to change the way features are installed on your computer or even to remove [SimpleProductName] from your computer." TabSkip="no" Transparent="yes" NoPrefix="yes"/>
+                <Control Id="Title" Type="Text" X="15" Y="15" Width="320" Height="15" Text="[DlgTitleFont][SimpleProductName] 维护" TabSkip="no" Transparent="yes" NoPrefix="yes"/>
+                <Control Id="Text" Type="Text" X="15" Y="60" Width="370" Height="24" Text="维护允许您更改功能在计算机上的安装方式，甚至可以从计算机中删除 [SimpleProductName]。" TabSkip="no" Transparent="yes" NoPrefix="yes"/>
                 <Control Id="Buttons" Type="RadioButtonGroup" X="45" Y="99" Width="310" Height="117" Property="InstallModeRB" TabSkip="no"/>
-                <Control Id="Continue" Type="PushButton" X="325" Y="265" Width="60" Height="20" Text="&amp;Continue" TabSkip="no" Default="yes">
-                    <Condition Action="disable">InstallModeRB&lt;&gt;"Remove"</Condition>
+                <Control Id="Continue" Type="PushButton" X="325" Y="265" Width="60" Height="20" Text="&amp;继续" TabSkip="no" Default="yes">
+                    <Condition Action="disable">InstallModeRB&lt;&gt;"移除"</Condition>
                     <Condition Action="enable">InstallModeRB="Remove"</Condition>
                     <Publish Property="InstallMode" Value="[InstallModeRB]">1</Publish>
                     <Publish Event="ReinstallMode" Value="ecmus">InstallMode="Repair" AND OutOfDiskSpace&lt;&gt;1</Publish>
                     <Publish Event="Remove" Value="All">InstallMode="Remove" AND OutOfDiskSpace&lt;&gt;1</Publish>
                     <Publish Event="Reinstall" Value="All">InstallMode="Repair" AND OutOfDiskSpace&lt;&gt;1</Publish>
                     <Publish Event="EndDialog" Value="Return">InstallMode="Repair" AND OutOfDiskSpace&lt;&gt;1</Publish>
-                    <Publish Property="ButtonTextInstall" Value="&amp;Modify now">InstallMode="Change"</Publish>
-                    <Publish Property="TitleCustomize" Value="Installed Features Selection">InstallMode="Change"</Publish>
+                    <Publish Property="ButtonTextInstall" Value="&amp;修改">InstallMode="Change"</Publish>
+                    <Publish Property="TitleCustomize" Value="功能选择">InstallMode="Change"</Publish>
                     <Publish Property="Progress1" Value="Modifying">InstallMode="Change"</Publish>
                     <Publish Property="Progress2" Value="Modification">InstallMode="Change"</Publish>
                     <Publish Property="Progress1" Value="Repairing">InstallMode="Repair"</Publish>
@@ -215,9 +215,9 @@
             </Dialog>
 
             <RadioButtonGroup Property="InstallModeRB">
-                <RadioButton Height="15" Text="&amp;Modify" ToolTip="Allows changing which features are installed." Value="Change" Width="370" X="0" Y="0"/>
-                <RadioButton Height="15" Text="&amp;Repair" ToolTip="Repairs errors in the current installation state." Value="Repair" Width="370" X="0" Y="20"/>
-                <RadioButton Height="15" Text="&amp;Remove" ToolTip="Removes the program from your computer." Value="Remove" Width="370" X="0" Y="40"/>
+                <RadioButton Height="15" Text="&amp;Modify" ToolTip="允许更改功能。" Value="更改" Width="370" X="0" Y="0"/>
+                <RadioButton Height="15" Text="&amp;Repair" ToolTip="修复当前安装状态下的错误." Value="修复" Width="370" X="0" Y="20"/>
+                <RadioButton Height="15" Text="&amp;Remove" ToolTip="从计算机中删除程序." Value="删除" Width="370" X="0" Y="40"/>
             </RadioButtonGroup>
         </UI>
 
@@ -229,14 +229,14 @@
         -->
         <UI>
             <Dialog Id="AdminInstallPointPage" X="50" Y="50" Width="400" Height="300" Title="[Setup] [SimpleProductName] [DisplayVersion]" NoMinimize="yes">
-                <Control Id="Title" Type="Text" X="15" Y="15" Width="320" Height="15" Text="[DlgTitleFont][SimpleProductName] Administrative Install Image Preparation" TabSkip="no" Transparent="yes" NoPrefix="yes"/>
-                <Control Id="Text" Type="Text" X="15" Y="60" Width="370" Height="24" Text="You are about to prepare installation image for [SimpleProductName], to allow easier group deployment." TabSkip="no"/>
-                <Control Id="PathEditLabel" Type="Text" X="15" Y="94" Width="370" Height="12" Text="&amp;Enter desired folder or click &quot;Browse&quot;:" TabSkip="no"/>
+                <Control Id="Title" Type="Text" X="15" Y="15" Width="320" Height="15" Text="[DlgTitleFont][SimpleProductName] 管理安装映像" TabSkip="no" Transparent="yes" NoPrefix="yes"/>
+                <Control Id="Text" Type="Text" X="15" Y="60" Width="370" Height="24" Text="您将准备 [SimpleProductName] 的安装映像，以便更容易地进行组部署。" TabSkip="no"/>
+                <Control Id="PathEditLabel" Type="Text" X="15" Y="94" Width="370" Height="12" Text="&amp;输入所需文件夹或单击 &quot;浏览&quot;:" TabSkip="no"/>
                 <Control Id="PathEdit" Type="PathEdit" X="15" Y="106" Width="370" Height="18" Property="TARGETDIR" TabSkip="no"/>
-                <Control Id="Browse" Type="PushButton" X="325" Y="129" Width="60" Height="20" Text="Br&amp;owse" TabSkip="no">
+                <Control Id="Browse" Type="PushButton" X="325" Y="129" Width="60" Height="20" Text="浏览" TabSkip="no">
                     <Publish Event="SpawnDialog" Value="BrowseAdminPage">1</Publish>
                 </Control>
-                <Control Id="Prepare" Type="PushButton" X="140" Y="245" Width="120" Height="40" Text="[DlgStrongFont]&amp;Prepare Now" TabSkip="no" Default="yes">
+                <Control Id="Prepare" Type="PushButton" X="140" Y="245" Width="120" Height="40" Text="[DlgStrongFont]&amp;现在准备" TabSkip="no" Default="yes">
                     <Publish Event="SetTargetPath" Value="TARGETDIR">1</Publish>
                     <Publish Event="EndDialog" Value="Return">OutOfDiskSpace&lt;&gt;1</Publish>
                     <Publish Event="SpawnDialog" Value="OutOfDiskRBPage">OutOfDiskSpace=1 AND OutOfNoRbDiskSpace=0 AND (PROMPTROLLBACKCOST="P" OR NOT PROMPTROLLBACKCOST)</Publish>
@@ -250,26 +250,26 @@
             </Dialog>
 
             <Dialog Id="BrowseAdminPage" X="50" Y="50" Width="400" Height="300" Title="[Setup] [SimpleProductName] [DisplayVersion]" NoMinimize="yes">
-                <Control Id="Title" Type="Text" X="15" Y="15" Width="320" Height="15" Text="[DlgTitleFont]Change current administrative installation folder." TabSkip="no" Transparent="yes" NoPrefix="yes"/>
+                <Control Id="Title" Type="Text" X="15" Y="15" Width="320" Height="15" Text="[DlgTitleFont]更改当前管理安装文件夹." TabSkip="no" Transparent="yes" NoPrefix="yes"/>
                 <Control Id="DirectoryComboLabel" Type="Text" X="15" Y="60" Width="40" Height="15" Text="&amp;Look in:" TabSkip="no"/>
                 <Control Id="DirectoryCombo" Type="DirectoryCombo" X="55" Y="60" Width="280" Height="80" Property="TARGETDIR" TabSkip="no" Removable="yes" Fixed="yes" Remote="yes">
                     <Subscribe Event="IgnoreChange" Attribute="IgnoreChange"/>
                 </Control>
-                <Control Id="Up" Type="PushButton" X="340" Y="60" Width="18" Height="18" Text="folder_up.ico" ToolTip="Up One Level" TabSkip="no" Icon="yes">
+                <Control Id="Up" Type="PushButton" X="340" Y="60" Width="18" Height="18" Text="folder_up.ico" ToolTip="上一级" TabSkip="no" Icon="yes">
                     <Publish Event="DirectoryListUp" Value="0">1</Publish>
                 </Control>
-                <Control Id="NewFolder" Type="PushButton" X="365" Y="60" Width="18" Height="18" Text="folder_new.ico" ToolTip="Create A New Folder" TabSkip="no" Icon="yes">
+                <Control Id="NewFolder" Type="PushButton" X="365" Y="60" Width="18" Height="18" Text="folder_new.ico" ToolTip="新建文件夹" TabSkip="no" Icon="yes">
                     <Publish Event="DirectoryListNew" Value="0">1</Publish>
                 </Control>
                 <Control Id="DirectoryList" Type="DirectoryList" X="15" Y="83" Width="370" Height="149" Property="TARGETDIR" TabSkip="no" Sunken="yes"/>
-                <Control Id="PathEditLabel" Type="Text" X="15" Y="237" Width="50" Height="15" Text="&amp;Folder:" TabSkip="no"/>
+                <Control Id="PathEditLabel" Type="Text" X="15" Y="237" Width="50" Height="15" Text="&amp;文件夹:" TabSkip="no"/>
                 <Control Id="PathEdit" Type="PathEdit" X="65" Y="237" Width="320" Height="18" Property="TARGETDIR" TabSkip="no"/>
-                <Control Id="OK" Type="PushButton" X="260" Y="265" Width="60" Height="20" Text="OK" TabSkip="no" Default="yes">
+                <Control Id="OK" Type="PushButton" X="260" Y="265" Width="60" Height="20" Text="确定" TabSkip="no" Default="yes">
                     <Publish Property="InstallMode" Value="Server Image">1</Publish>
                     <Publish Event="SetTargetPath" Value="TARGETDIR">1</Publish>
                     <Publish Event="EndDialog" Value="Return">1</Publish>
                 </Control>
-                <Control Id="Cancel" Type="PushButton" X="325" Y="265" Width="60" Height="20" Text="Cancel" TabSkip="no" Cancel="yes">
+                <Control Id="Cancel" Type="PushButton" X="325" Y="265" Width="60" Height="20" Text="取消" TabSkip="no" Cancel="yes">
                     <Publish Event="Reset" Value="0">1</Publish>
                     <Publish Event="EndDialog" Value="Return">1</Publish>
                 </Control>
